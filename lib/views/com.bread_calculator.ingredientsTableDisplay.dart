@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:bread_calculator/models/com.bread_calculator.ingredient.model.dart';
 
-String calcPercentage(int totalFlourWeight, int ingredientWeight) {
-  double _percentage = (ingredientWeight / totalFlourWeight * 100);
+String calcPercentage({int flourWeight, int ingredientWeight}) {
+  double _percentage = (ingredientWeight / flourWeight * 100);
   return "${_percentage.toStringAsFixed(1)}";
 }
 
-String getFlourPercentage(int primaryFlourWeight, Ingredient ingredient) {
-  String _percentage = calcPercentage(primaryFlourWeight, ingredient.weight);
+String getFlourPercentage({int primaryFlourWeight, Ingredient ingredient}) {
+  String _percentage = calcPercentage(
+      flourWeight: primaryFlourWeight, ingredientWeight: ingredient.weight);
 
   return ingredient.isFlour ? "($_percentage)" : "";
 }
 
 TableRow _buildIngredientRowDisplay(
-    Ingredient ingredient, int totalFlourWeight, primaryFlourWeight) {
+    {Ingredient ingredient, int totalFlourWeight, primaryFlourWeight}) {
   TextStyle _style = TextStyle(
       color: ingredient.isFlour ? Colors.brown.shade400 : Colors.grey.shade700,
       fontSize: 16,
@@ -41,14 +42,18 @@ TableRow _buildIngredientRowDisplay(
         alignment: Alignment.topRight,
         child: TableCell(
             child: Text(
-                calcPercentage(totalFlourWeight, ingredient.weight).toString(),
+                calcPercentage(
+                        flourWeight: totalFlourWeight,
+                        ingredientWeight: ingredient.weight)
+                    .toString(),
                 style: _style))),
     Container(
         padding: _padding,
         alignment: Alignment.topRight,
         child: TableCell(
           child: Text(
-            getFlourPercentage(primaryFlourWeight, ingredient),
+            getFlourPercentage(
+                primaryFlourWeight: primaryFlourWeight, ingredient: ingredient),
             style: _style,
           ),
         ))
@@ -67,6 +72,8 @@ Widget ingredientsTableDisplay(List<Ingredient> ingredients) {
   return Table(
       children: ingredients
           .map((e) => _buildIngredientRowDisplay(
-              e, _totalFlourWeight, _primaryFlourWeight))
+              ingredient: e,
+              totalFlourWeight: _totalFlourWeight,
+              primaryFlourWeight: _primaryFlourWeight))
           .toList());
 }
