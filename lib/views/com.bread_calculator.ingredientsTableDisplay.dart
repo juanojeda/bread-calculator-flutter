@@ -13,6 +13,20 @@ String getFlourPercentage({int primaryFlourWeight, Ingredient ingredient}) {
   return ingredient.isFlour ? "($_percentage)" : "";
 }
 
+Container _buildCell(
+    {String text, TextStyle style, Alignment alignment = Alignment.topLeft}) {
+  EdgeInsets _padding = EdgeInsets.only(bottom: 8);
+  return Container(
+      alignment: alignment,
+      padding: _padding,
+      child: TableCell(
+          child: Text(
+        text,
+        style: style,
+        softWrap: true,
+      )));
+}
+
 TableRow _buildIngredientRowDisplay(
     {Ingredient ingredient, int totalFlourWeight, primaryFlourWeight}) {
   TextStyle _style = TextStyle(
@@ -21,42 +35,36 @@ TableRow _buildIngredientRowDisplay(
       fontWeight:
           ingredient.isPrimaryFlour ? FontWeight.w800 : FontWeight.w400);
 
-  EdgeInsets _padding = EdgeInsets.only(bottom: 8);
+  return TableRow(children: [
+    _buildCell(text: ingredient.name, style: _style),
+    _buildCell(
+        text: "${ingredient.weight.toString()}g",
+        style: _style,
+        alignment: Alignment.topRight),
+    _buildCell(
+        text: calcPercentage(
+                flourWeight: totalFlourWeight,
+                ingredientWeight: ingredient.weight)
+            .toString(),
+        alignment: Alignment.topRight,
+        style: _style),
+    _buildCell(
+        text: getFlourPercentage(
+            primaryFlourWeight: primaryFlourWeight, ingredient: ingredient),
+        alignment: Alignment.topRight,
+        style: _style)
+  ]);
+}
+
+TableRow _buildTableHeader() {
+  TextStyle _style = TextStyle(
+      color: Colors.grey.shade800, fontWeight: FontWeight.w800, fontSize: 16);
 
   return TableRow(children: [
-    Container(
-        padding: _padding,
-        child: TableCell(
-            child: Text(
-          ingredient.name,
-          style: _style,
-          softWrap: true,
-        ))),
-    Container(
-        padding: _padding,
-        alignment: Alignment.topRight,
-        child: TableCell(
-            child: Text("${ingredient.weight.toString()}g", style: _style))),
-    Container(
-        padding: _padding,
-        alignment: Alignment.topRight,
-        child: TableCell(
-            child: Text(
-                calcPercentage(
-                        flourWeight: totalFlourWeight,
-                        ingredientWeight: ingredient.weight)
-                    .toString(),
-                style: _style))),
-    Container(
-        padding: _padding,
-        alignment: Alignment.topRight,
-        child: TableCell(
-          child: Text(
-            getFlourPercentage(
-                primaryFlourWeight: primaryFlourWeight, ingredient: ingredient),
-            style: _style,
-          ),
-        ))
+    _buildCell(text: "Ingredient", style: _style),
+    _buildCell(text: "Weight", style: _style, alignment: Alignment.topRight),
+    _buildCell(text: "%", style: _style, alignment: Alignment.topRight),
+    _buildCell(text: "% (flour)", style: _style, alignment: Alignment.topRight),
   ]);
 }
 
@@ -69,11 +77,12 @@ Widget ingredientsTableDisplay(List<Ingredient> ingredients) {
   int _primaryFlourWeight =
       ingredients.firstWhere((ing) => ing.isPrimaryFlour).weight;
 
-  return Table(
-      children: ingredients
-          .map((e) => _buildIngredientRowDisplay(
-              ingredient: e,
-              totalFlourWeight: _totalFlourWeight,
-              primaryFlourWeight: _primaryFlourWeight))
-          .toList());
+  List<TableRow> _ingredientRows = ingredients
+      .map((e) => _buildIngredientRowDisplay(
+          ingredient: e,
+          totalFlourWeight: _totalFlourWeight,
+          primaryFlourWeight: _primaryFlourWeight))
+      .toList();
+
+  return Table(children: [_buildTableHeader(), ...?_ingredientRows]);
 }
