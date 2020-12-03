@@ -1,4 +1,5 @@
 import 'package:bread_calculator/views/com.bread_calculator.IngredientsTableDisplay.dart';
+import 'package:bread_calculator/views/com.bread_calculator.addIngredient.dart';
 import 'package:flutter/material.dart';
 import 'package:bread_calculator/data/com.bread_calculator.mock_ingredients.dart'
     as mock;
@@ -34,7 +35,7 @@ class BreadCalculatorHomePage extends StatefulWidget {
 
 class _BreadCalculatorHomePageState extends State<BreadCalculatorHomePage> {
   final String title = 'Bread Calculator';
-  List<Ingredient> ingredients = [];
+  final List<Ingredient> ingredients = [];
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +50,7 @@ class _BreadCalculatorHomePageState extends State<BreadCalculatorHomePage> {
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: ingredients.length > 0
-                ? <Widget>[ingredientsTableDisplay(ingredients)]
-                : [Text("No ingredients to display")],
+            children: [AddIngredientForm()],
           ),
         ),
       ),
@@ -59,7 +58,7 @@ class _BreadCalculatorHomePageState extends State<BreadCalculatorHomePage> {
           onPressed: () {
             List _ingredients = getIngredients();
             setState(() {
-              ingredients = _ingredients;
+              ingredients.addAll([..._ingredients]);
             });
           },
           child: Icon(Icons.add)),

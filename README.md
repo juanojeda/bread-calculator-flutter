@@ -14,3 +14,4 @@ Built using Flutter, to learn Flutter and Dart.
 [ ] Scale whole recipe
 [ ] Edit ingredient
 [ ] Edit ingredient by percentage
+[ ] Sort ingredients by flour desc, then other desc.
