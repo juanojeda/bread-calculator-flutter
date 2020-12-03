@@ -1,13 +1,16 @@
-import 'package:bread_calculator/views/com.bread_calculator.IngredientsTableDisplay.dart';
-import 'package:bread_calculator/views/com.bread_calculator.addIngredient.dart';
+import 'package:bakers_percentages/models/com.bakers_percentages.RecipeStore.dart';
+import 'package:bakers_percentages/widgets/com.bakers_percentages.IngredientsTableDisplay.dart';
+import 'package:bakers_percentages/widgets/com.bakers_percentages.addIngredient.dart';
 import 'package:flutter/material.dart';
-import 'package:bread_calculator/data/com.bread_calculator.mock_ingredients.dart'
+import 'package:bakers_percentages/data/com.bakers_percentages.mock_ingredients.dart'
     as mock;
+import 'package:provider/provider.dart';
 
-import 'models/com.bread_calculator.ingredient.model.dart';
+import 'models/com.bakers_percentages.recipe.model.dart';
 
 void main() {
-  runApp(BreadCalculator());
+  runApp(ChangeNotifierProvider(
+      create: (context) => RecipeStore(), child: BreadCalculator()));
 }
 
 getIngredients() {
@@ -23,22 +26,17 @@ class BreadCalculator extends StatelessWidget {
           primarySwatch: Colors.brown,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: BreadCalculatorHomePage());
+        routes: {'/': (context) => BreadCalculatorHomePage()},
+        initialRoute: '/');
   }
 }
 
-class BreadCalculatorHomePage extends StatefulWidget {
-  @override
-  _BreadCalculatorHomePageState createState() =>
-      _BreadCalculatorHomePageState();
-}
-
-class _BreadCalculatorHomePageState extends State<BreadCalculatorHomePage> {
+class BreadCalculatorHomePage extends StatelessWidget {
   final String title = 'Bread Calculator';
-  final List<Ingredient> ingredients = [];
 
   @override
   Widget build(BuildContext context) {
+    var recipes = context.watch<RecipeStore>().recipes;
     // like the render method, reruns each time setState is called
     return Scaffold(
       appBar: AppBar(
@@ -48,18 +46,26 @@ class _BreadCalculatorHomePageState extends State<BreadCalculatorHomePage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [AddIngredientForm()],
+          child: ListView(
+            children: [
+              AddIngredientForm(),
+              recipes.length > 0
+                  ? IngredientsTableDisplay(recipes[0].ingredients)
+                  : Center(
+                      child: Text("No ingredients to display"),
+                    )
+            ],
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
+            var recipeStore = context.read<RecipeStore>();
             List _ingredients = getIngredients();
-            setState(() {
-              ingredients.addAll([..._ingredients]);
-            });
+
+            Recipe recipe = Recipe(name: "Bread", ingredients: _ingredients);
+
+            recipeStore.add(recipe);
           },
           child: Icon(Icons.add)),
     );

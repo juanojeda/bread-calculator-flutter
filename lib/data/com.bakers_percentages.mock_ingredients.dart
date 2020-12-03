@@ -1,4 +1,4 @@
-import 'package:bread_calculator/models/com.bread_calculator.ingredient.model.dart';
+import 'package:bakers_percentages/models/com.bakers_percentages.ingredient.model.dart';
 
 List<Ingredient> ingredients = [
   Ingredient(

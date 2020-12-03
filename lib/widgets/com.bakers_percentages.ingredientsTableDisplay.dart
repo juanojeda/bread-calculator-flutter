@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bread_calculator/models/com.bread_calculator.ingredient.model.dart';
+import 'package:bakers_percentages/models/com.bakers_percentages.ingredient.model.dart';
 
 String calcPercentage({int flourWeight, int ingredientWeight}) {
   double _percentage = (ingredientWeight / flourWeight * 100);
@@ -68,7 +68,7 @@ TableRow _buildTableHeader() {
   ]);
 }
 
-Widget ingredientsTableDisplay(List<Ingredient> ingredients) {
+Widget IngredientsTableDisplay(List<Ingredient> ingredients) {
   int _totalFlourWeight = ingredients
       .where((ing) => ing.isFlour)
       .map((ing) => ing.weight)
