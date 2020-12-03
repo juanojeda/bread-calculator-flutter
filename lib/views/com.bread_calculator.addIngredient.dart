@@ -21,14 +21,20 @@ class AddIngredientFormState extends State<AddIngredientForm> {
       child: Column(
         children: <Widget>[
           TextFormField(
-              decoration: InputDecoration(labelText: "Ingredient name*"),
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: (value) {
-                if (value.isEmpty) {
-                  return "Enter an ingredient.";
-                }
-                return null;
-              }),
+            decoration: InputDecoration(labelText: "Ingredient name*"),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: (value) {
+              if (value.isEmpty) {
+                return "Enter an ingredient.";
+              }
+              return null;
+            },
+            onChanged: (value) {
+              setState(() {
+                _ingredientName = value;
+              });
+            },
+          ),
           TextFormField(
             decoration: InputDecoration(labelText: "Weight (g)*"),
             keyboardType: TextInputType.phone,
@@ -42,10 +48,16 @@ class AddIngredientFormState extends State<AddIngredientForm> {
               }
               return null;
             },
+            onChanged: (value) {
+              setState(() {
+                _weight = int.parse(value);
+              });
+            },
           ),
           CheckboxListTile(
             title: Text("Is it a flour?"),
             value: _isFlour,
+            selected: _isFlour,
             onChanged: (bool newValue) {
               setState(() {
                 _isFlour = newValue;
@@ -59,6 +71,7 @@ class AddIngredientFormState extends State<AddIngredientForm> {
           Visibility(
               child: CheckboxListTile(
                 title: Text("Is it the main flour?"),
+                selected: _isPrimaryFlour,
                 value: _isPrimaryFlour,
                 onChanged: (bool newValue) {
                   setState(() {
@@ -66,7 +79,22 @@ class AddIngredientFormState extends State<AddIngredientForm> {
                   });
                 },
               ),
-              visible: _isFlour)
+              visible: _isFlour),
+          ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState.validate()) {
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text('Adding ingredient'),
+                    backgroundColor: Colors.teal,
+                    duration: Duration(milliseconds: 1000),
+                  ));
+
+                  _formKey.currentState.reset();
+                  _isFlour = false;
+                  _isPrimaryFlour = false;
+                }
+              },
+              child: Text("Add ingredient"))
         ],
       ),
     );
