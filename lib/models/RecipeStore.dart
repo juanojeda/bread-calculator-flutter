@@ -1,7 +1,8 @@
 import 'dart:collection';
 
-import 'package:bakers_percentages/models/com.bakers_percentages.recipe.model.dart';
 import 'package:flutter/material.dart';
+
+import 'recipe.model.dart';
 
 class RecipeStore extends ChangeNotifier {
   final List<Recipe> _recipes = [];

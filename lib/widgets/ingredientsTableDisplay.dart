@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bakers_percentages/models/com.bakers_percentages.ingredient.model.dart';
+import '../models/ingredient.model.dart';
 
 String calcPercentage({int flourWeight, int ingredientWeight}) {
   double _percentage = (ingredientWeight / flourWeight * 100);

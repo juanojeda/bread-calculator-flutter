@@ -1,4 +1,4 @@
-import 'package:bakers_percentages/models/com.bakers_percentages.ingredient.model.dart';
+import '../models/ingredient.model.dart';
 
 List<Ingredient> ingredients = [
   Ingredient(
