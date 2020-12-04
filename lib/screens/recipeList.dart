@@ -7,8 +7,9 @@ import '../models/RecipeLibrary.dart';
 
 Widget _buildRecipeList(List<Recipe> recipes) {
   if (recipes.length > 0) {
-    return Column(
-        children: [...recipes.toList().map((recipe) => Text(recipe.name))]);
+    return ListView(children: [
+      ...recipes.toList().map((recipe) => ListTile(title: Text(recipe.name)))
+    ]);
   }
   return Text("You haven't got any recipes yet!");
 }
