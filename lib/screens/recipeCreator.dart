@@ -1,14 +1,18 @@
-import '../models/recipe.model.dart';
+import 'package:bakers_percentages/models/RecipeDraft.dart';
+import 'package:bakers_percentages/models/recipe.model.dart';
 
-import '../models/RecipeStore.dart';
+import '../models/RecipeDraft.dart';
 import '../widgets/addIngredient.dart';
 import '../widgets/ingredientsTableDisplay.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import '../data/mock_ingredients.dart' as mock;
 
-_getIngredients() {
-  return mock.ingredients;
+Widget _buildRecipeTitle(name) {
+  return Padding(
+    padding: EdgeInsets.only(top: 24, bottom: 16),
+    child:
+        Text(name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+  );
 }
 
 class RecipeCreator extends StatelessWidget {
@@ -16,7 +20,9 @@ class RecipeCreator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var recipes = context.watch<RecipeStore>().recipes;
+    RecipeDraft _draftStore = context.watch<RecipeDraft>();
+    Recipe _draft = _draftStore.draft;
+
     // like the render method, reruns each time setState is called
     return Scaffold(
       appBar: AppBar(
@@ -28,9 +34,13 @@ class RecipeCreator extends StatelessWidget {
         child: Center(
           child: ListView(
             children: [
+              TextFormField(
+                  decoration: InputDecoration(labelText: "Recipe name*"),
+                  onChanged: (value) => _draftStore.updateName(value)),
               AddIngredientForm(),
-              recipes.length > 0
-                  ? IngredientsTableDisplay(recipes[0].ingredients)
+              _buildRecipeTitle(_draft.name),
+              _draft.ingredients.length > 0
+                  ? ingredientsTableDisplay(_draft.ingredients)
                   : Center(
                       child: Text("No ingredients to display"),
                     )
@@ -38,16 +48,6 @@ class RecipeCreator extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            var recipeStore = context.read<RecipeStore>();
-            List _ingredients = _getIngredients();
-
-            Recipe recipe = Recipe(name: "Bread", ingredients: _ingredients);
-
-            recipeStore.add(recipe);
-          },
-          child: Icon(Icons.add)),
     );
   }
 }

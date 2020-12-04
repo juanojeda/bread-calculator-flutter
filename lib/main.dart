@@ -1,13 +1,16 @@
+import 'package:bakers_percentages/models/RecipeDraft.dart';
 import 'package:bakers_percentages/screens/recipeCreator.dart';
 
-import 'models/RecipeStore.dart';
+import 'models/RecipeLibrary.dart';
 import 'screens/recipeList.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider(
-      create: (context) => RecipeStore(), child: BreadCalculator()));
+  runApp((MultiProvider(providers: [
+    ChangeNotifierProvider<RecipeLibrary>(create: (_) => RecipeLibrary()),
+    ChangeNotifierProvider<RecipeDraft>(create: (_) => RecipeDraft())
+  ], child: BreadCalculator())));
 }
 
 class BreadCalculator extends StatelessWidget {
@@ -20,9 +23,9 @@ class BreadCalculator extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         routes: {
-          '/': (context) => RecipeCreator(),
-          '/recipes': (context) => RecipeListPage()
+          '/': (context) => RecipeListPage(),
+          '/add': (context) => RecipeCreator()
         },
-        initialRoute: '/recipes');
+        initialRoute: '/');
   }
 }

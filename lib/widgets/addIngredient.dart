@@ -1,14 +1,16 @@
+import 'package:bakers_percentages/models/RecipeDraft.dart';
+import 'package:bakers_percentages/models/ingredient.model.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 class AddIngredientForm extends StatefulWidget {
   @override
-  AddIngredientFormState createState() {
-    return AddIngredientFormState();
-  }
+  AddIngredientFormState createState() => AddIngredientFormState();
 }
 
 class AddIngredientFormState extends State<AddIngredientForm> {
   final _formKey = GlobalKey<FormState>();
+
   String _ingredientName = "";
   int _weight = 0;
   var _isFlour = false;
@@ -16,6 +18,7 @@ class AddIngredientFormState extends State<AddIngredientForm> {
 
   @override
   Widget build(BuildContext context) {
+    RecipeDraft _draftStore = context.watch<RecipeDraft>();
     return Form(
       key: _formKey,
       child: Column(
@@ -89,7 +92,18 @@ class AddIngredientFormState extends State<AddIngredientForm> {
                     duration: Duration(milliseconds: 1000),
                   ));
 
+                  Ingredient _ingredient = Ingredient(
+                      name: _ingredientName,
+                      weight: _weight,
+                      isFlour: _isFlour,
+                      isPrimaryFlour: _isPrimaryFlour);
+
+                  _draftStore.addIngredient(_ingredient);
+                  print("add ingredient weight: ${_ingredient.weight}");
+
                   _formKey.currentState.reset();
+                  _ingredientName = "";
+                  _weight = 0;
                   _isFlour = false;
                   _isPrimaryFlour = false;
                 }

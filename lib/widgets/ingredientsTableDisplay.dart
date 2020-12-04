@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import '../models/ingredient.model.dart';
 
 String calcPercentage({int flourWeight, int ingredientWeight}) {
+  if (flourWeight == 0) {
+    return "-";
+  }
   double _percentage = (ingredientWeight / flourWeight * 100);
   return "${_percentage.toStringAsFixed(1)}";
 }
@@ -68,14 +71,52 @@ TableRow _buildTableHeader() {
   ]);
 }
 
-Widget IngredientsTableDisplay(List<Ingredient> ingredients) {
-  int _totalFlourWeight = ingredients
-      .where((ing) => ing.isFlour)
-      .map((ing) => ing.weight)
-      .reduce((init, currWeight) => init + currWeight);
+void sortIngredients(List<Ingredient> ingredients) {
+  ingredients.sort((a, b) {
+    if (b.isPrimaryFlour) {
+      return 1;
+    }
+    if (a.isPrimaryFlour) {
+      return -1;
+    }
+    if (b.isFlour && !a.isFlour) {
+      if (a.isPrimaryFlour) {
+        return -1;
+      }
+      return 1;
+    }
 
-  int _primaryFlourWeight =
-      ingredients.firstWhere((ing) => ing.isPrimaryFlour).weight;
+    if (b.weight > a.weight) {
+      return 1;
+    }
+
+    return -1;
+  });
+}
+
+Widget ingredientsTableDisplay(List<Ingredient> ingredients) {
+  print("Table display: ${ingredients[0].name} ${ingredients[0].weight}");
+
+  List<Ingredient> _allFlours =
+      ingredients.where((ing) => ing.isFlour).toList();
+
+  int _totalFlourWeight = _allFlours.length > 0
+      ? _allFlours.map((ing) {
+          print("map $ing");
+          return ing.weight;
+        }).reduce((init, currWeight) => init + currWeight)
+      : 0;
+
+  int _primaryFlourWeight = ingredients
+      .firstWhere(
+        (ing) => ing.isPrimaryFlour,
+        orElse: () => Ingredient(
+          weight: 0,
+        ),
+      )
+      .weight;
+
+  sortIngredients(ingredients);
 
   List<TableRow> _ingredientRows = ingredients
       .map((e) => _buildIngredientRowDisplay(
