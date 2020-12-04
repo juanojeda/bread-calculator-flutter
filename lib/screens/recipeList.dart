@@ -1,12 +1,14 @@
+import 'package:bakers_percentages/models/recipe.model.dart';
 import 'package:bakers_percentages/screens/recipeCreator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/RecipeLibrary.dart';
 
-Widget _buildRecipeList(recipes) {
+Widget _buildRecipeList(List<Recipe> recipes) {
   if (recipes.length > 0) {
-    return recipes.map((recipe) => ListTile(title: Text(recipe.name)));
+    return Column(
+        children: [...recipes.toList().map((recipe) => Text(recipe.name))]);
   }
   return Text("You haven't got any recipes yet!");
 }
