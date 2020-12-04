@@ -16,18 +16,18 @@ String getFlourPercentage({int primaryFlourWeight, Ingredient ingredient}) {
   return ingredient.isFlour ? "($_percentage)" : "";
 }
 
-Container _buildCell(
+TableCell _buildCell(
     {String text, TextStyle style, Alignment alignment = Alignment.topLeft}) {
   EdgeInsets _padding = EdgeInsets.only(bottom: 8);
-  return Container(
-      alignment: alignment,
-      padding: _padding,
-      child: TableCell(
+  return TableCell(
+      child: Container(
+          alignment: alignment,
+          padding: _padding,
           child: Text(
-        text,
-        style: style,
-        softWrap: true,
-      )));
+            text,
+            style: style,
+            softWrap: true,
+          )));
 }
 
 TableRow _buildIngredientRowDisplay(

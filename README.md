@@ -7,8 +7,9 @@ Built using Flutter, to learn Flutter and Dart.
 
 ## TODO
 
-[ ] Create recipe (add / remove ingredients from the list)
-[ ] Save recipe to a list of recipes
+[x] Create recipe (add ingredients from the list)
+[ ] Edit recipe (add ingredients from the list)
+[x] Save recipe to a list of recipes
 [ ] Display a recipe from the saved recipes
 [ ] Scale recipe by single ingredient
 [ ] Scale whole recipe
