@@ -1,24 +1,40 @@
 import 'package:bakers_percentages/models/recipe.model.dart';
 import 'package:bakers_percentages/screens/recipeCreator.dart';
+import 'package:bakers_percentages/screens/recipeView.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/RecipeLibrary.dart';
 
-Widget _buildRecipeList(List<Recipe> recipes) {
-  if (recipes.length > 0) {
-    return ListView(children: [
-      ...recipes.toList().map((recipe) => ListTile(title: Text(recipe.name)))
-    ]);
+List<ListTile> _buildRecipes(
+    List<Recipe> recipes, Function() Function() onTapRecipe) {
+  return recipes.toList().map(
+      (recipe) => ListTile(title: Text(recipe.name), onTap: onTapRecipe()));
+}
+
+class RecipeList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    RecipeLibrary recipeLibrary = context.watch<RecipeLibrary>();
+
+    Function getOnTap() {
+      return (Recipe recipe) {
+        recipeLibrary.openRecipe(recipe.id);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => RecipeViewPage()));
+      };
+    }
+
+    List<Recipe> recipes = recipeLibrary.recipes;
+    return ListView(
+      children: [..._buildRecipes(recipes, getOnTap())],
+    );
   }
-  return Text("You haven't got any recipes yet!");
 }
 
 class RecipeListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var recipes = context.watch<RecipeLibrary>().recipes;
-
     return Scaffold(
       appBar: AppBar(
         // comes from the MaterialApp build method, which initialises the home page with a title property
@@ -26,7 +42,7 @@ class RecipeListPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Center(child: _buildRecipeList(recipes)),
+        child: Center(child: RecipeList()),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.push(

@@ -9,6 +9,23 @@ import '../widgets/ingredientsTableDisplay.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
+class _SaveButton extends StatelessWidget {
+  @override
+  build(BuildContext context) {
+    RecipeDraft _draftStore = context.watch<RecipeDraft>();
+    Recipe _draft = _draftStore.draft;
+    RecipeLibrary _recipeLibrary = Provider.of<RecipeLibrary>(context);
+    return IconButton(
+        icon: Icon(Icons.save),
+        onPressed: () {
+          _recipeLibrary.add(_draft);
+
+          Navigator.popUntil(context, ModalRoute.withName("/"));
+          _draftStore.clear();
+        });
+  }
+}
+
 Widget _buildRecipeTitle(name) {
   return Padding(
     padding: EdgeInsets.only(top: 24, bottom: 16),
@@ -24,24 +41,13 @@ class RecipeCreator extends StatelessWidget {
   Widget build(BuildContext context) {
     RecipeDraft _draftStore = context.watch<RecipeDraft>();
     Recipe _draft = _draftStore.draft;
-    RecipeLibrary _recipeLibrary = Provider.of<RecipeLibrary>(context);
 
     // like the render method, reruns each time setState is called
     return Scaffold(
       appBar: AppBar(
         // comes from the MaterialApp build method, which initialises the home page with a title property
         title: Text(title),
-        actions: [
-          IconButton(
-              icon: Icon(Icons.save),
-              onPressed: () {
-                _recipeLibrary.add(_draft);
-
-                Navigator.pop(context,
-                    MaterialPageRoute(builder: (context) => RecipeListPage()));
-                _draftStore.clear();
-              })
-        ],
+        actions: [_SaveButton()],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

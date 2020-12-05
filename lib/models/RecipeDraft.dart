@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 import 'recipe.model.dart';
 
 class RecipeDraft extends ChangeNotifier {
-  Recipe _draft = Recipe(name: "", ingredients: []);
+  Recipe _draft = Recipe(id: Uuid().v4(), name: "", ingredients: []);
 
   get draft => _draft;
 
@@ -15,9 +16,7 @@ class RecipeDraft extends ChangeNotifier {
   }
 
   void addIngredient(ingredient) {
-    print("Draft store name: ${ingredient.name}");
     _draft.ingredients.add(ingredient);
-    print("Draft store name: ${_draft.ingredients}");
     notifyListeners();
   }
 
@@ -27,7 +26,7 @@ class RecipeDraft extends ChangeNotifier {
   }
 
   void clear() {
-    _draft = Recipe(name: "", ingredients: []);
+    _draft = Recipe(id: Uuid().v4(), name: "", ingredients: []);
     notifyListeners();
   }
 }

@@ -95,14 +95,11 @@ void sortIngredients(List<Ingredient> ingredients) {
 }
 
 Widget ingredientsTableDisplay(List<Ingredient> ingredients) {
-  print("Table display: ${ingredients[0].name} ${ingredients[0].weight}");
-
   List<Ingredient> _allFlours =
       ingredients.where((ing) => ing.isFlour).toList();
 
   int _totalFlourWeight = _allFlours.length > 0
       ? _allFlours.map((ing) {
-          print("map $ing");
           return ing.weight;
         }).reduce((init, currWeight) => init + currWeight)
       : 0;

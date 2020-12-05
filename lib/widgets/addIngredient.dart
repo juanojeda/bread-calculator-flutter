@@ -99,7 +99,6 @@ class AddIngredientFormState extends State<AddIngredientForm> {
                       isPrimaryFlour: _isPrimaryFlour);
 
                   _draftStore.addIngredient(_ingredient);
-                  print("add ingredient weight: ${_ingredient.weight}");
 
                   _formKey.currentState.reset();
                   _ingredientName = "";
