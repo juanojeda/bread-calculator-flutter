@@ -6,28 +6,27 @@ import 'package:provider/provider.dart';
 
 import '../models/RecipeLibrary.dart';
 
-List<ListTile> _buildRecipes(
-    List<Recipe> recipes, Function() Function() onTapRecipe) {
-  return recipes.toList().map(
-      (recipe) => ListTile(title: Text(recipe.name), onTap: onTapRecipe()));
-}
-
 class RecipeList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     RecipeLibrary recipeLibrary = context.watch<RecipeLibrary>();
-
-    Function getOnTap() {
-      return (Recipe recipe) {
-        recipeLibrary.openRecipe(recipe.id);
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => RecipeViewPage()));
-      };
-    }
-
     List<Recipe> recipes = recipeLibrary.recipes;
+    bool hasRecipes = recipes.length > 0;
+
     return ListView(
-      children: [..._buildRecipes(recipes, getOnTap())],
+      children: hasRecipes
+          ? [
+              ...recipes.toList().map((recipe) => ListTile(
+                  title: Text(recipe.name),
+                  onTap: () {
+                    recipeLibrary.openRecipe(recipe.id);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => RecipeViewPage()));
+                  }))
+            ]
+          : [Center(child: Text("You don't have any recipes yet!"))],
     );
   }
 }
