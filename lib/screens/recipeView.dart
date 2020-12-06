@@ -1,6 +1,5 @@
-import 'package:bakers_percentages/models/recipe.model.dart';
-import 'package:bakers_percentages/screens/recipeCreator.dart';
 import 'package:bakers_percentages/screens/recipeList.dart';
+import 'package:bakers_percentages/widgets/ingredientsTableDisplay.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,26 +21,21 @@ class RecipeViewPage extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        // comes from the MaterialApp build method, which initialises the home page with a title property
-        title: Text("Your recipes"),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Center(
-            child: ListView(children: [
-          Padding(
-            padding: EdgeInsets.only(top: 24, bottom: 16),
-            child: Text(_currentRecipe.name,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-          )
-        ])),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => RecipeCreator())),
-        child: Icon(Icons.add_box_outlined),
-      ),
-    );
+        appBar: AppBar(
+          // comes from the MaterialApp build method, which initialises the home page with a title property
+          title: Text("Your recipes"),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Center(
+              child: ListView(children: [
+            Padding(
+              padding: EdgeInsets.only(bottom: 30),
+              child: Text(_currentRecipe.name,
+                  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 22)),
+            ),
+            ingredientsTableDisplay(_currentRecipe.ingredients)
+          ])),
+        ));
   }
 }

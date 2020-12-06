@@ -3,6 +3,7 @@ import 'package:bakers_percentages/screens/recipeCreator.dart';
 import 'package:bakers_percentages/screens/recipeView.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 import '../models/RecipeLibrary.dart';
 
@@ -16,15 +17,18 @@ class RecipeList extends StatelessWidget {
     return ListView(
       children: hasRecipes
           ? [
-              ...recipes.toList().map((recipe) => ListTile(
-                  title: Text(recipe.name),
-                  onTap: () {
-                    recipeLibrary.openRecipe(recipe.id);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RecipeViewPage()));
-                  }))
+              ...recipes.toList().map((recipe) => Card(
+                      child: ListTile(
+                    title: Text(recipe.name,
+                        style: TextStyle(fontWeight: FontWeight.w300)),
+                    onTap: () {
+                      recipeLibrary.openRecipe(recipe.id);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RecipeViewPage()));
+                    },
+                  )))
             ]
           : [Center(child: Text("You don't have any recipes yet!"))],
     );
@@ -46,7 +50,7 @@ class RecipeListPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.push(
             context, MaterialPageRoute(builder: (context) => RecipeCreator())),
-        child: Icon(Icons.add_box_outlined),
+        child: Icon(Icons.add),
       ),
     );
   }
