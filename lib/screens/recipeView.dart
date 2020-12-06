@@ -1,9 +1,9 @@
-import 'package:bakers_percentages/screens/recipeList.dart';
-import 'package:bakers_percentages/widgets/ingredientsTableDisplay.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/RecipeLibrary.dart';
+import '../providers/RecipeLibrary.dart';
+import '../widgets/ingredientsTableDisplay.dart';
+import 'recipeList.dart';
 
 class RecipeViewPage extends StatelessWidget {
   @override
@@ -11,11 +11,6 @@ class RecipeViewPage extends StatelessWidget {
     var _currentRecipe = context.watch<RecipeLibrary>().currentRecipe;
 
     if (_currentRecipe == null) {
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text('Recipe doesn\'t exist!'),
-        backgroundColor: Colors.red,
-        duration: Duration(milliseconds: 1000),
-      ));
       Navigator.pop(
           context, MaterialPageRoute(builder: (context) => RecipeListPage()));
     }

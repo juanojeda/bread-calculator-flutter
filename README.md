@@ -9,7 +9,7 @@ Built using Flutter, to learn Flutter and Dart.
 
 [x] Create recipe (add ingredients from the list)
 [x] Save recipe to a list of recipes
-[ ] Persist recipes to phone memory
+[x] Persist recipes to phone memory
 [x] Display a recipe from the saved recipes
 [ ] Edit recipe (add/remove ingredients to/from the list)
 [ ] Scale recipe by single ingredient

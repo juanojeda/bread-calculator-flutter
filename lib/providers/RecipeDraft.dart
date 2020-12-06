@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
-import 'recipe.model.dart';
+import '../models/recipe.model.dart';
 
 class RecipeDraft extends ChangeNotifier {
   Recipe _draft = Recipe(id: Uuid().v4(), name: "", ingredients: []);

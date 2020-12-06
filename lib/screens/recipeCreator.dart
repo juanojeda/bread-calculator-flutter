@@ -1,9 +1,7 @@
-import 'package:bakers_percentages/models/RecipeDraft.dart';
-import 'package:bakers_percentages/models/RecipeLibrary.dart';
-import 'package:bakers_percentages/models/recipe.model.dart';
-import 'package:bakers_percentages/screens/recipeList.dart';
+import '../providers/RecipeDraft.dart';
+import '../providers/RecipeLibrary.dart';
+import '../models/recipe.model.dart';
 
-import '../models/RecipeDraft.dart';
 import '../widgets/addIngredient.dart';
 import '../widgets/ingredientsTableDisplay.dart';
 import 'package:provider/provider.dart';

@@ -1,26 +1,43 @@
+import 'package:flutter/material.dart';
 import 'dart:collection';
 
-import 'package:flutter/material.dart';
-
-import 'recipe.model.dart';
+import '../models/recipe.model.dart';
+import 'DBHelper.dart';
 
 class RecipeLibrary extends ChangeNotifier {
-  final List<Recipe> _recipes = [];
+  final DBHelper dbHelper;
+  List<Recipe> _recipes = [];
   Recipe _currentRecipe;
 
+  RecipeLibrary(this._recipes, this.dbHelper) {
+    if (dbHelper != null) {
+      fetchAndSetData();
+    }
+  }
+
+  Future<void> fetchAndSetData() async {
+    if (dbHelper.db != null) {
+      final dataList = await dbHelper.getData();
+
+      _recipes = dataList.map((item) => Recipe.fromJson(item)).toList();
+      notifyListeners();
+    }
+  }
+
   UnmodifiableListView<Recipe> get recipes => UnmodifiableListView(_recipes);
+
   Recipe get currentRecipe => _currentRecipe;
 
   void add(Recipe recipe) {
     _recipes.add(recipe);
     notifyListeners();
+
+    dbHelper.insert(recipe.toJson());
   }
 
   void openRecipe(recipeId) {
     _currentRecipe = _recipes.firstWhere((recipe) => recipe.id == recipeId,
         orElse: () => null);
-
-    print("Current REcipe ${_currentRecipe.id}, ${_currentRecipe.name}");
 
     notifyListeners();
   }

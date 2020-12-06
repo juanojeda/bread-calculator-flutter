@@ -1,11 +1,10 @@
-import 'package:bakers_percentages/models/recipe.model.dart';
-import 'package:bakers_percentages/screens/recipeCreator.dart';
-import 'package:bakers_percentages/screens/recipeView.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
 
-import '../models/RecipeLibrary.dart';
+import '../models/recipe.model.dart';
+import '../providers/RecipeLibrary.dart';
+import 'recipeCreator.dart';
+import 'recipeView.dart';
 
 class RecipeList extends StatelessWidget {
   @override
