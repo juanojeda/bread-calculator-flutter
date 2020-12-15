@@ -23,7 +23,7 @@ class BreadCalculator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Bread Calculator',
+        title: 'Calcubaker',
         theme: ThemeData(
           primarySwatch: Colors.brown,
           visualDensity: VisualDensity.adaptivePlatformDensity,

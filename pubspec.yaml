@@ -1,5 +1,5 @@
-name: bakers_percentages
-description: A new Flutter project.
+name: calcubaker
+description: A calculator to help you keep track of percentages in your bread recipes
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -34,11 +34,14 @@ dependencies:
   cupertino_icons: ^1.0.0
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.8.1
   flutter_test:
     sdk: flutter
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/icon.png"
 
 # The following section is specific to Flutter.
 flutter:

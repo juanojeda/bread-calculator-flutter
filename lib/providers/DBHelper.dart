@@ -1,4 +1,4 @@
-import 'package:bakers_percentages/models/recipe.model.dart';
+import 'package:calcubaker/models/recipe.model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:path/path.dart' as path;
