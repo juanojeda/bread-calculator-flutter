@@ -1,3 +1,4 @@
+import 'package:bakers_percentages/models/recipe.model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:path/path.dart' as path;
@@ -35,6 +36,10 @@ class DBHelper with ChangeNotifier {
   Future<void> insert(Map<String, dynamic> data) async {
     await db.insert(tableName, data,
         conflictAlgorithm: sql.ConflictAlgorithm.replace);
+  }
+
+  Future<void> delete(Recipe recipe) async {
+    await db.delete(tableName, where: 'id == ?', whereArgs: [recipe.id]);
   }
 
   Future<List<Map<String, dynamic>>> getData() async {

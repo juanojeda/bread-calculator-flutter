@@ -35,6 +35,13 @@ class RecipeLibrary extends ChangeNotifier {
     dbHelper.insert(recipe.toJson());
   }
 
+  void delete(Recipe recipe) {
+    _recipes.remove(recipe);
+    notifyListeners();
+
+    dbHelper.delete(recipe);
+  }
+
   void openRecipe(recipeId) {
     _currentRecipe = _recipes.firstWhere((recipe) => recipe.id == recipeId,
         orElse: () => null);
