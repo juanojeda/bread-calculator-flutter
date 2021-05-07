@@ -11,6 +11,7 @@ class _SaveButton extends StatelessWidget {
   @override
   build(BuildContext context) {
     RecipeDraft _draftStore = context.watch<RecipeDraft>();
+    
     Recipe _draft = _draftStore.draft;
     RecipeLibrary _recipeLibrary = Provider.of<RecipeLibrary>(context);
     return IconButton(
@@ -38,6 +39,7 @@ class RecipeCreator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     RecipeDraft _draftStore = context.watch<RecipeDraft>();
+
     Recipe _draft = _draftStore.draft;
 
     // like the render method, reruns each time setState is called
