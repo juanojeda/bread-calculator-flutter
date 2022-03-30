@@ -7,15 +7,15 @@ Built using Flutter, to learn Flutter and Dart.
 
 ## TODO
 
-[x] Create recipe (add ingredients from the list)
-[x] Save recipe to a list of recipes
-[x] Persist recipes to phone memory
-[x] Display a recipe from the saved recipes
-[ ] Edit recipe (add/remove ingredients to/from the list)
-[x] Delete recipes from db
-[ ] Scale recipe
-  [ ] Scale by percentage (whole recipe)
-  [ ] Scale by weight of 1 ingredient
-[ ] Edit ingredient
-[ ] Edit ingredient by percentage
-[x] Sort ingredients by flour desc, then other desc.
+- [x] Create recipe (add ingredients from the list)
+- [x] Save recipe to a list of recipes
+- [x] Persist recipes to phone memory
+- [x] Display a recipe from the saved recipes
+- [ ] Edit recipe (add/remove ingredients to/from the list)
+- [x] Delete recipes from db
+- [ ] Scale recipe
+- [ ] Scale by percentage (whole recipe)
+- [ ] Scale by weight of 1 ingredient
+- [ ] Edit ingredient
+- [ ] Edit ingredient by percentage
+- [x] Sort ingredients by flour desc, then other desc.
