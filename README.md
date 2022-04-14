@@ -4,6 +4,20 @@ Based on my WIP web project [Bread Calculator](https://github.com/juanojeda/brea
 
 Built using Flutter, to learn Flutter and Dart.
 
+# Dependencies
+
+- [Flutter](https://docs.flutter.dev/get-started/install/macos#android-setup)
+- [Android Studio](https://developer.android.com/studio/index.html)
+- [Cocoapods](https://guides.cocoapods.org/using/getting-started.html#installation)
+- You may need to [set up the Android emulator](Shttps://docs.flutter.dev/get-started/install/macos#android-setup) on your workspace
+- [install android SDK CLI tools](https://stackoverflow.com/questions/60475481/flutter-doctor-error-android-sdkmanager-tool-not-found-windows)
+- run `flutter doctor --android-licenses`
+- if running on a mac, run `flutter config --enable-macos-desktop`
+
+# How to run it locally
+- [Ensure that USB debugging is enabled](https://developer.android.com/studio/debug/dev-options) on your android device
+- Plug your device into the computer using a USB cable
+- Run `flutter devices` to verify that Flutter recognises the device
 
 ## TODO
 
